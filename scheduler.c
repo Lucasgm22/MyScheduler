@@ -17,7 +17,7 @@ void printQueue(int priority) {
    struct node *ptr = head[priority];
    printf("PROCESSOS DE PRIORIDADE %d: \n[\n", priority);
 	
-   //start from the beginning
+   
    while(ptr != NULL) {
       printf("   pid = %d, cpuBurst = %d)\n",ptr->pid, ptr->cpuBurst);
       ptr = ptr->next;
@@ -36,7 +36,7 @@ struct node* getProccessToCompute(int priority) {
    printf("ESCOLHER PROCESSO COM MENOR CPUBURST NA PRIORIDADE %d\n", priority);
    struct node *ptr = head[priority];
    struct node *processSelected = ptr;
-   //start from the beginning
+   
    while(ptr != NULL) {
       ptr = ptr->next;
       if (ptr != NULL && ptr->cpuBurst < processSelected->cpuBurst)
@@ -50,7 +50,7 @@ struct node* getProccessToPromote(int priority) {
    printf("ESCOLHER PROCESSO COM MAIOR CPUBURST NA PRIORIDADE %d\n", priority);
    struct node *ptr = head[priority];
    struct node *processSelected = ptr;
-   //start from the beginning
+   
    while(ptr != NULL) {
       ptr = ptr->next;
       if (ptr != NULL && ptr->cpuBurst > processSelected->cpuBurst)
@@ -61,17 +61,15 @@ struct node* getProccessToPromote(int priority) {
 
 //Insere em uma fila de prioridae
 void insertFirst(int pid, int priority, int cpuBurst) {
-   //create a link
+
    printf("INSERINDO O PROCESSO %d NA FILA DE PRIORIDADE %d\n", pid, priority);
    struct node *link = (struct node*) malloc(sizeof(struct node));
 	
    link->pid = pid;
    link->cpuBurst = cpuBurst;
 	
-   //point it to old first node
    link->next = head[priority];
 	
-   //point first to new first node
    head[priority] = link;
 }
 
