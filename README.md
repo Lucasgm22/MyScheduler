@@ -9,7 +9,8 @@ Projeto para desenvolver a abstração de um Scheduler de Multilevel Priority Qu
 prioridade e, dentro desses, com o maior CPU-Burst.
 
 **Entrada:** Cada processo em uma linha, cada linha tem as informações de pid, prioridade e cpu-Burst nessa Ordem.
-EX;
+
+EX:
 ```
 1 2 1
 2 0 120
