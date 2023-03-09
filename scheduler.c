@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define N 4
+
 struct node {
    int pid;
    int cpuBurst;
@@ -25,10 +27,8 @@ void printQueue(int priority) {
 }
 
 void printQueues() {
-   printQueue(0);
-   printQueue(1);
-   printQueue(2);
-   printQueue(3);
+   for (int i = 0; i < N; i++)
+      printQueue(i);
 }
 
 //Seleciona o processo com menor cpuBurst na Prioridade - Shortest Job First
@@ -106,16 +106,14 @@ int isEmpty(int priority) {
 
 //Inicia as filas
 void initPriorityQueus() {
-   head = (struct node**) malloc(sizeof(struct node*) * 4);
-   head[0] = NULL;
-   head[1] = NULL;
-   head[2] = NULL;
-   head[3] = NULL;
+   head = (struct node**) malloc(sizeof(struct node*) * N);
+   for (int i = 0; i < N; i++)
+      head[i] = NULL;
 }
 
 // Retorna maior prioridade com processos ou -1 caso nao haja processos
 int hasProcess() {
-   for (int i = 0; i < 4; i++) {
+   for (int i = 0; i < N; i++) {
    	printf("CHECANDO SE TEM PROCESSOS NA PRIORIDADE %d\n", i);
    	if (!isEmpty(i)) return i;
    }
@@ -135,13 +133,13 @@ void computeOnQueue(int priority) {
 }
 
 void aging() {
-   for (int i = 3; i > 0; i--) {
+   for (int i = N - 1; i > 0; i--) {
       printf("CHECANDO SE TEM PROCESSOS NA PRIORIDADE %d\n", i);
       if (!isEmpty(i)) {
          printf("EXISTE PROCESSO NA PRIORIDADE %d\n", i);
          struct node *proccess = getProccessToPromote(i);
          printf("PROCESSO %d SERÁ PROMOVIDO\n", proccess->pid);
-         insertFirst(proccess->pid, i-1, proccess->cpuBurst);
+         insertFirst(proccess->pid, i - 1, proccess->cpuBurst);
          removeFromQueue(proccess->pid, i);
          return;
       }
@@ -158,10 +156,10 @@ int main() {
    int counter = 0;
    while(scanf("%d %d %d", &pid, &priority, &cpuBurst) != EOF)
    {
-        if (0 <= priority && priority <= 3)
+        if (0 <= priority && priority < N)
    	   insertFirst(pid, priority, cpuBurst);
    	else
-   	   printf("PROCESSO INVALIDO PRIORIDADE DEVE ESTAR ENTRE 0 E 3\n");
+   	   printf("PROCESSO INVALIDO PRIORIDADE DEVE ESTAR ENTRE 0 E %d\n", N);
    }
    printf("---------------------------------------------------------------------------\n");
    printf("PROCESSOS RECEBIDO:\n");
