@@ -1,7 +1,7 @@
 # MyScheduler
 Projeto para desenvolver a abstração de um Scheduler de Multilevel Priority Queue (MPQ).
 
-- Todos os processos chegam ao mesmo instante ao seu escalonador;
+- Todos os processos chegam ao mesmo instante ao escalonador;
 - 4 níveis de prioriodade na MPQ;
 - As prioridades vao de  ̃ 0 (mais alta) a 3 (mais baixa);
 - Para realizar o desempate entre processos com a mesma prioridade, utilize SJF (Shortest Job First);
