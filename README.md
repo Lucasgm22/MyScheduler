@@ -3,7 +3,7 @@ Projeto para desenvolver a abstração de um Scheduler de Multilevel Priority Qu
 
 - Todos os processos chegam ao mesmo instante ao escalonador;
 - 4 níveis de prioriodade na MPQ;
-- As prioridades vao de  ̃ 0 (mais alta) a 3 (mais baixa);
+- As prioridades vao de 0 (mais alta) a 3 (mais baixa);
 - Para realizar o desempate entre processos com a mesma prioridade, utilize SJF (Shortest Job First);
 - (Aging) A cada 10 unidades de tempo (a mesma do CPU-burst), aumente em 1 a prioridade do processo com a menor
 prioridade e, dentro desses, com o maior CPU-Burst.
