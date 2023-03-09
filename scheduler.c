@@ -158,7 +158,10 @@ int main() {
    int counter = 0;
    while(scanf("%d %d %d", &pid, &priority, &cpuBurst) != EOF)
    {
-   	insertFirst(pid, priority, cpuBurst);
+        if (0 <= priority && priority <= 3)
+   	   insertFirst(pid, priority, cpuBurst);
+   	else
+   	   printf("PROCESSO INVALIDO PRIORIDADE DEVE ESTAR ENTRE 0 E 3\n");
    }
    printf("---------------------------------------------------------------------------\n");
    printf("PROCESSOS RECEBIDO:\n");
