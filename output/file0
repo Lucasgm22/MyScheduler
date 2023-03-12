@@ -2405,7 +2405,7 @@ PROCESSOS TERMINADOS
 ---------------------------------------------------------------------------
 RESULTADO DO ESCALONAMENTO: 
 [
-   pid = 3, waitingTime = 311)
-   pid = 2, waitingTime = 121)
-   pid = 1, waitingTime = 21)
+   pid = 3, totalCpuBurst = 190, waitingTime = 121)
+   pid = 2, totalCpuBurst = 120, waitingTime = 1)
+   pid = 1, totalCpuBurst = 1, waitingTime = 20)
 ]

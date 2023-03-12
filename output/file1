@@ -1249,10 +1249,10 @@ PROCESSOS TERMINADOS
 ---------------------------------------------------------------------------
 RESULTADO DO ESCALONAMENTO: 
 [
-   pid = 6, waitingTime = 146)
-   pid = 2, waitingTime = 106)
-   pid = 4, waitingTime = 81)
-   pid = 1, waitingTime = 51)
-   pid = 5, waitingTime = 25)
-   pid = 3, waitingTime = 5)
+   pid = 6, totalCpuBurst = 50, waitingTime = 96)
+   pid = 2, totalCpuBurst = 50, waitingTime = 56)
+   pid = 4, totalCpuBurst = 20, waitingTime = 61)
+   pid = 1, totalCpuBurst = 1, waitingTime = 50)
+   pid = 5, totalCpuBurst = 20, waitingTime = 5)
+   pid = 3, totalCpuBurst = 5, waitingTime = 0)
 ]
