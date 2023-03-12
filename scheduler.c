@@ -4,15 +4,19 @@
 
 #define N 4
 
+int counter = 0;
+
 struct node {
    int pid;
    int cpuBurst;
+   int waitingTime;
    struct node *next;
 };
 
 struct node **head;
+struct node *headF;
 
-//Apresenta o conteudo nas filas de prioridade
+// Apresenta o conteudo nas filas de prioridade
 void printQueue(int priority) {
    struct node *ptr = head[priority];
    printf("PROCESSOS DE PRIORIDADE %d: \n[\n", priority);
@@ -26,12 +30,26 @@ void printQueue(int priority) {
    printf("]\n");
 }
 
+// Apresenta o resultado final
+void printFinishedProccessList() {
+   struct node *ptr = headF;
+   printf("RESULTADO DO ESCALONAMENTO: \n[\n");
+	
+   
+   while(ptr != NULL) {
+      printf("   pid = %d, waitingTime = %d)\n", ptr->pid, ptr->waitingTime);
+      ptr = ptr->next;
+   }
+	
+   printf("]\n");
+}
+
 void printQueues() {
    for (int i = 0; i < N; i++)
       printQueue(i);
 }
 
-//Seleciona o processo com menor cpuBurst na Prioridade - Shortest Job First
+// Seleciona o processo com menor cpuBurst na Prioridade - Shortest Job First
 struct node* getProccessToCompute(int priority) {
    printf("ESCOLHER PROCESSO COM MENOR CPUBURST NA PRIORIDADE %d\n", priority);
    struct node *ptr = head[priority];
@@ -45,7 +63,7 @@ struct node* getProccessToCompute(int priority) {
    return processSelected;
 }
 
-//Seleciona o processo com maior cpuBurst na Prioridade
+// Seleciona o processo com maior cpuBurst na Prioridade
 struct node* getProccessToPromote(int priority) {
    printf("ESCOLHER PROCESSO COM MAIOR CPUBURST NA PRIORIDADE %d\n", priority);
    struct node *ptr = head[priority];
@@ -59,7 +77,7 @@ struct node* getProccessToPromote(int priority) {
    return processSelected;
 }
 
-//Insere em uma fila de prioridae
+// Insere em uma fila de prioridae
 void insertFirst(int pid, int priority, int cpuBurst) {
 
    printf("INSERINDO O PROCESSO %d NA FILA DE PRIORIDADE %d\n", pid, priority);
@@ -73,7 +91,21 @@ void insertFirst(int pid, int priority, int cpuBurst) {
    head[priority] = link;
 }
 
-//Remove um processo da ffila especificada
+// Insere o processo na lista de processos finalizados
+void insertFirstFinished(int pid) {
+
+   printf("INSERINDO O PROCESSO %d NA LISTA DE PROCESSOS FINALIZADOS\n", pid);
+   struct node *link = (struct node*) malloc(sizeof(struct node));
+	
+   link->pid = pid;
+   link->waitingTime = counter;
+	
+   link->next = headF;
+	
+   headF = link;
+}
+
+// Remove um processo da fila especificada
 void removeFromQueue(int pid, int priority) {
    printf("REMOVENDO O PROCESSO %d DA FILA DE PRIORIDADE %d\n", pid, priority);
    struct node *ptr = head[priority];
@@ -94,19 +126,25 @@ void removeFromQueue(int pid, int priority) {
       }
       ptr = ptr->next;
    }
-   printf("PROCESSO %d DA FILA DE PRIORIDADE %d\n NÃO E", pid, priority);
+   printf("PROCESSO %d DA FILA DE PRIORIDADE %d\n NÃO ENCONTRADO", pid, priority);
 }
 
-//Verifica se tem processo com essa prioridade
+// Verifica se tem processo com essa prioridade
 int isEmpty(int priority) {
    return head[priority] == NULL;
 }
 
-//Inicia as filas
+// Inicia as filas
 void initPriorityQueus() {
    head = (struct node**) malloc(sizeof(struct node*) * N);
    for (int i = 0; i < N; i++)
       head[i] = NULL;
+}
+
+// Inicia a lista de processos finalizados
+void initFinishedProcessList() {
+   headF = (struct node*) malloc(sizeof(struct node));
+   headF = NULL;
 }
 
 // Retorna maior prioridade com processos ou -1 caso nao haja processos
@@ -126,10 +164,13 @@ void computeOnQueue(int priority) {
    currentProccess->cpuBurst -= 1;
    if (currentProccess->cpuBurst <= 0) {
       printf("PROCESSO %d FINALIZADO\n", currentProccess->pid);
+      insertFirstFinished(currentProccess->pid);
       removeFromQueue(currentProccess->pid, priority);
    }
 }
 
+
+// Funcao de aging dos processos
 void aging() {
    for (int i = N - 1; i > 0; i--) {
       printf("CHECANDO SE TEM PROCESSOS NA PRIORIDADE %d\n", i);
@@ -148,10 +189,10 @@ void aging() {
 int main() {
 
    initPriorityQueus();
+   initFinishedProcessList();
    int pid;
    int priority;
    int cpuBurst;
-   int counter = 0;
    while(scanf("%d %d %d", &pid, &priority, &cpuBurst) != EOF)
    {
         if (0 <= priority && priority < N)
@@ -167,8 +208,8 @@ int main() {
    int currentPriority = hasProcess();
    while (currentPriority != -1) {
       printf("PRIORIDADE ATUAL %d\n", currentPriority);
-      computeOnQueue(currentPriority);
       counter++;
+      computeOnQueue(currentPriority);
       if (counter % 10 == 0) {
       	 printf("---------------------------------------------------------------------------\n");
          printf("ENVELHECENDO OS PROCESSOS - UNIDADES DE TEMPO DECORRIDAS %d\n", counter);
@@ -182,7 +223,7 @@ int main() {
       currentPriority = hasProcess();
    }
    printf("---------------------------------------------------------------------------\n");
-   printQueues();
+   printFinishedProccessList();
    
    return 0;
 }
