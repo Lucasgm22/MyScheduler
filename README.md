@@ -1,5 +1,5 @@
 # MyScheduler
-Projeto para desenvolver a abstração de um Scheduler de Multilevel Priority Queue (MPQ), desenvolvido para a disciplina de Sistemas Operacionais da UFABC, ministrada pelo professor Prof. Dr. Joao Marcelo Borovina Josko..
+Projeto para desenvolver a abstração de um Scheduler de Multilevel Priority Queue (MPQ), desenvolvido para a disciplina de Sistemas Operacionais da UFABC, ministrada pelo professor Prof. Dr. Joao Marcelo Borovina Josko.
 
 - Todos os processos chegam ao mesmo instante ao escalonador;
 - 4 níveis de prioriodade na MPQ;
